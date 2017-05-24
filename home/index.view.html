@@ -1,0 +1,113 @@
+<div  class="marginLeft">
+    <div class="panel panel-default animate-show" ng-show="!isShowForm">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3 col-sm-3 col-md-3 modal-timer pull-left">
+                    <span class="qr-header pull-left">
+                   <label class="btn btn-default btn-primary active" 
+                         ng-model="$parent.$parent.buttons" uncheckable 
+                          ng-click="logout();">
+                        Log Out
+                    </label>
+                </span>
+                </div>
+                
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <span class="modal-title qr-header"><span style="vertical-align: text-top;font-weight: bold;">Employee List</span> 
+                    </span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 modal-timer pull-right">
+                    <span class="qr-header pull-right">
+                   <label class="btn btn-default btn-primary active" 
+                         ng-model="$parent.$parent.buttons" uncheckable 
+                          ng-click="showEmployeeDetails('Add', '');">
+                        Add Employee
+                    </label>
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div ng-if="employeeData.length === 0">
+                No Employee records. Please "ADD EMPLOYEE!!!"
+            
+            </div>
+            
+            <ul class="list-group">
+                <li class="list-group-item cursorPointer" ng-repeat="parts in employeeData | orderBy:'+name'"
+                    ng-click="showEmployeeDetails('Edit', parts);">
+                    <img alt="" ng-src="{{AbsoluteImageUrl}}"  style="width: 35px;"/>&nbsp;&nbsp;
+                    
+                    <span class="resource-text"><span style="font-weight: bold;">Name: </span>{{parts.firstName}} {{parts.lastName}}</span>&nbsp;&nbsp;
+                    <span class="resource-text" ng-if="parts.dob"><span style="font-weight: bold;">DOB: </span>{{parts.dob | date}}</span>&nbsp;&nbsp;
+                    <span class="resource-text" ng-if="parts.companyName"><span style="font-weight: bold;">Company: </span>{{parts.companyName}}</span>&nbsp;&nbsp;
+                    <!--<span class="glyphicon glyphicon-trash" style="float: right;" ng-click="deleteTrailParts(parts);$event.stopPropagation();"></span>-->
+                    <span class="glyphicon glyphicon-pencil cursorPointer" style="float: right;margin-right: 2%;" ng-click="showEmployeeDetails('Edit', parts);"></span>                  
+                    <div class="clearfix"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default animate-show" ng-if="isShowForm">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <span class="modal-title qr-header"><span style="vertical-align: text-top;font-weight: bold;">Employee Details Form</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12" style="margin-top: 2%;">
+                    <div class="alert alert-danger" id="validationMessage" ng-show="showValidationError" style="white-space: pre;">
+                     </div>                        
+                    <div class="row">                       
+                        <div class="col-xs-3">
+                            <label for="pwd">First Name<sup>*</sup></label>
+                        </div>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" ng-model="employeeDetails.firstName">
+                        </div>
+                    </div>
+                    <div class="row media">
+                        <div class="col-xs-3">
+                            <label for="pwd">Last Name<sup>*</sup></label>
+                        </div>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" ng-model="employeeDetails.lastName">
+                        </div>
+                    </div>
+
+                    <div class="row media">
+                        <div class="col-xs-3">
+                            <label for="pwd">Date Of Birth</label>
+                        </div>
+                        <div class="col-xs-9">
+                            <!--<input type="number" class="form-control" ng-model="employeeDetails.dob">-->
+                            <input type="date" class="form-control" name="dob" min="2000-01-02" ng-model="employeeDetails.dob">
+                            <!--<ng-datepicker  ng-model="employeeDetails.dob" view-format="DD-MM-YYYY">
+      </ng-datepicker>-->
+                        </div>
+                    </div>
+                    <div class="row media">
+                        <div class="col-xs-3">
+                            <label for="pwd">Company Name</label>
+                        </div>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" ng-model="employeeDetails.companyName">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer clearfix media">
+            <div class="pull-left">
+                <a class="btn btn-default pull-left" ng-click="cancelDetails();">Cancel</a>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-primary ng-binding" ng-click="createTrailParts();">Save</a>
+            </div>
+        </div>
+    </div>
+</div>
